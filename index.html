@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIA SOFT - Система автоматизации для ресторанов</title>
+    <meta name="description" content="CIA SOFT - комплексная система автоматизации ресторанного бизнеса с POS, бухгалтерией, складом, техкартами и онлайн-меню">
+    <meta name="keywords" content="автоматизация ресторана, pos система, управление рестораном, онлайн-меню, складской учет">
+    <meta name="author" content="CIA SOFT">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --light-green: #e0f0e5;
+            --light-bronze: #a8d5c9;
+            --light-ocean: #c3dae5;
+            --accent-green: #2a7d5f;
+            --accent-blue: #1a4b5f;
+            --text-dark: #333;
+            --text-light: #555;
+            --background: #f9fbfa;
+            --card-bg: #ffffff;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background);
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(249, 251, 250, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-left: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(to right, var(--accent-green), var(--accent-blue));
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--accent-blue);
+            padding: 5px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 650px;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--accent-blue);
+        }
+        
+        .typing-text {
+            min-height: 84px;
+            margin-bottom: 30px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--text-light);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(45deg, var(--accent-green), var(--accent-blue));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-green));
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn:hover:before {
+            width: 100%;
+        }
+        
+        .btn:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 60px;
+            position: relative;
+            color: var(--accent-blue);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-green), var(--accent-blue));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light-bronze);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--accent-green), var(--accent-blue));
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover:before {
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--accent-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+        }
+        
+        .feature-card p {
+            color: var(--text-light);
+        }
+        
+        /* Demo Section */
+        .demo {
+            padding: 100px 0;
+            background: var(--light-green);
+        }
+        
+        .demo-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .demo-content {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 30px;
+        }
+        
+        .demo-visual {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .demo-image {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+        }
+        
+        .demo-image:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Interactive Demo */
+        .interactive-demo {
+            margin-top: 50px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .demo-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-bronze);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .demo-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .demo-tab.active {
+            border-bottom: 3px solid var(--accent-green);
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+        
+        .demo-content-tab {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .demo-content-tab.active {
+            display: block;
+        }
+        
+        /* Calculator Section */
+        .calculator {
+            padding: 100px 0;
+            background: var(--light-ocean);
+        }
+        
+        .calc-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .calc-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--accent-blue);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-bronze);
+            border-radius: 8px;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(42, 125, 95, 0.2);
+        }
+        
+        .calc-result {
+            grid-column: span 2;
+            background: var(--light-green);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .calc-result h3 {
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+        }
+        
+        .savings-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            height: 300px;
+        }
+        
+        .testimonial {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: var(--transition);
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .testimonial.active {
+            opacity: 1;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+        
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .testimonial-control {
+            background: var(--light-bronze);
+            width: 12px;
+            height: 12px;
+            borderRadius: 50%;
+            margin: 0 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .testimonial-control.active {
+            background: var(--accent-green);
+            transform: scale(1.3);
+        }
+        
+        /* Integrations Section */
+        .integrations {
+            padding: 100px 0;
+            background: var(--light-green);
+        }
+        
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .integration-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100px;
+        }
+        
+        .integration-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .integration-item img {
+            max-width: 100%;
+            max-height: 60px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .integration-item:hover img {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background: var(--light-ocean);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--light-bronze);
+        }
+        
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 2px solid var(--accent-green);
+            z-index: 1;
+        }
+        
+        .pricing-card.featured:before {
+            content: 'ПОПУЛЯРНЫЙ';
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            background: var(--accent-green);
+            color: white;
+            padding: 5px 40px;
+            font-size: 12px;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        
+        .pricing-header {
+            margin-bottom: 25px;
+        }
+        
+        .pricing-name {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+        }
+        
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 5px;
+        }
+        
+        .pricing-period {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 25px 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li i {
+            color: var(--accent-green);
+            margin-right: 10px;
+        }
+        
+        .pricing-cta {
+            margin-top: 30px;
+        }
+        
+        /* FAQ Section */
+        .faq {
+            padding: 100px 0;
+            background: var(--light-green);
+        }
+        
+        .accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .accordion-item {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+        }
+        
+        .accordion-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--accent-blue);
+            transition: var(--transition);
+        }
+        
+        .accordion-header:hover {
+            background: rgba(42, 125, 95, 0.05);
+        }
+        
+        .accordion-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+        
+        .accordion-item.active .accordion-content {
+            padding: 20px;
+            max-height: 500px;
+        }
+        
+        .accordion-item.active .accordion-header {
+            background: rgba(42, 125, 95, 0.05);
+        }
+        
+        .accordion-item.active .accordion-header i {
+            transform: rotate(45deg);
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+            color: white;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .cta p {
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta .btn {
+            background: white;
+            color: var(--accent-blue);
+        }
+        
+        .cta .btn:before {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 50px 0;
+            background: var(--accent-blue);
+            text-align: center;
+            color: white;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-green);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent-green);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+            box-shadow: var(--shadow);
+            border: none;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--accent-blue);
+            transform: translateY(-5px);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Loading animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .mobile-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 400px;
+                height: 100vh;
+                background: var(--card-bg);
+                z-index: 1001;
+                padding: 80px 30px 30px;
+                transition: var(--transition);
+                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            }
+            
+            .mobile-menu.active {
+                right: 0;
+            }
+            
+            .mobile-menu .nav-links {
+                display: block;
+            }
+            
+            .mobile-menu .nav-links li {
+                margin: 0 0 20px 0;
+            }
+            
+            .mobile-menu .nav-links a {
+                font-size: 1.2rem;
+            }
+            
+            .mobile-menu-close {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                color: var(--accent-blue);
+                padding: 5px;
+            }
+            
+            .calc-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .calc-result {
+                grid-column: span 1;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .demo-container {
+                flex-direction: column;
+            }
+            
+            .demo-content {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .feature-card {
+                text-align: left;
+            }
+            
+            .feature-icon {
+                font-size: 2rem;
+            }
+            
+            .demo-tabs {
+                flex-direction: column;
+            }
+            
+            .demo-tab {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+            }
+            
+            .feature-card {
+                padding: 20px;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .nav-links li {
+                margin-left: 15px;
+            }
+            
+            .pricing-card {
+                padding: 30px 20px;
+            }
+            
+            .pricing-price {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js" aria-hidden="true"></div>
+    
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo" id="logo" aria-label="CIA SOFT Home">
+                <span class="logo-text">CIA SOFT</span>
+            </div>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="#features">Возможности</a></li>
+                    <li><a href="#demo">Демо</a></li>
+                    <li><a href="#calculator">Калькулятор</a></li>
+                    <li><a href="#pricing">Тарифы</a></li>
+                    <li><a href="#testimonials">Отзывы</a></li>
+                    <li><a href="#integrations">Интеграции</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile menu">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+        <nav aria-label="Mobile navigation">
+            <ul class="nav-links">
+                <li><a href="#features">Возможности</a></li>
+                <li><a href="#demo">Демo</a></li>
+                <li><a href="#calculator">Калькулятор</a></li>
+                <li><a href="#pricing">Тарифы</a></li>
+                <li><a href="#testimonials">Отзывы</a></li>
+                <li><a href="#integrations">Интеграции</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Автоматизация вашего ресторана с помощью современных технологий</h1>
+                <div class="typing-text">
+                    <h2 id="typing" aria-live="polite"></h2>
+                </div>
+                <p>CIA SOFT — это комплексная система для автоматизации ресторанного бизнеса, объединяющая POS, бухгалтерию, склад, техкарты и онлайн-меню в одном удобном интерфейсе.</p>
+                <a href="#contact" class="btn">Заказать демонстрацию</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Наши возможности</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-cash-register"></i></div>
+                    <h3>POS и мобильный официант</h3>
+                    <p>Приём заказов на планшете или телефоне с мгновенной передачей на кухню и в кассу.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Бухгалтерия и склад</h3>
+                    <p>Полный учёт и контроль всех финансовых операций и складских остатков в реальном времени.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>Техкарты и меню</h3>
+                    <p>Создание технологических карт, QR-меню и онлайн-меню с возможностью мгновенного обновления.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-truck"></i></div>
+                    <h3>Интеграции и доставка</h3>
+                    <p>Получение заказов с Glovo и других платформ доставки напрямую в вашу кассу.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-wifi"></i></div>
+                    <h3>Работа без интернета</h3>
+                    <p>Система продолжает работать даже при отключении интернета с синхронизацией при восстановлении связи.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Быстрая установка</h3>
+                    <p>Полная установка и настройка системы всего за один день без простоев вашего бизнеса.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Demo Section -->
+    <section class="demo" id="demo">
+        <div class="container demo-container">
+            <div class="demo-content">
+                <h2 class="section-title">Как это работает</h2>
+                <p>Наша система объединяет все аспекты управления рестораном в одном интерфейсе. От приёма заказа до фискального чека, от контроля склада до автоматической отправки отчетов.</p>
+                <p>Интуитивно понятный интерфейс позволяет вашим сотрудникам быстро освоить систему, а владельцам получать детальную аналитику в реальном времени.</p>
+                <a href="#contact" class="btn">Запросить демонстрацию</a>
+            </div>
+            <div class="demo-visual">
+                <img src="https://placehold.co/600x400/e0f0e5/1a4b5f?text=CIA+SOFT+Interface" alt="CIA SOFT Interface" class="demo-image" loading="lazy">
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="interactive-demo">
+                <h3>Интерактивная демонстрация</h3>
+                <div class="demo-tabs">
+                    <div class="demo-tab active" data-tab="tab1">Приём заказов</div>
+                    <div class="demo-tab" data-tab="tab2">Управление складом</div>
+                    <div class="demo-tab" data-tab="tab3">Аналитика</div>
+                </div>
+                
+                <div class="demo-content-tab active" id="tab1">
+                    <p>Наша система позволяет принимать заказы с различных устройств и сразу передавать их на кухню. Официанты могут использовать планшеты или смартфоны для работы с системой.</p>
+                    <img src="https://placehold.co/600x300/e0f0e5/1a4b5f?text=Order+Management" alt="Order Management" style="width: 100%; border-radius: 8px; margin-top: 15px;" loading="lazy">
+                </div>
+                
+                <div class="demo-content-tab" id="tab2">
+                    <p>Автоматическое отслеживание остатков на складе, контроль списания продуктов и формирование заказов поставщикам. Система предупредит о низких остатках продуктов.</p>
+                    <img src="https://placehold.co/600x300/e0f0e5/1a4b5f?text=Inventory+Management" alt="Inventory Management" style="width: 100%; border-radius: 8px; margin-top: 15px;" loading="lazy">
+                </div>
+                
+                <div class="demo-content-tab" id="tab3">
+                    <p>Детальная аналитика продаж, популярности блюд, эффективности работы сотрудников и многое другое. Все данные в реальном времени с возможностью формирования отчетов.</p>
+                    <img src="https://placehold.co/600x300/e0f0e5/1a4b5f?text=Analytics+Dashboard" alt="Analytics Dashboard" style="width: 100%; border-radius: 8px; margin-top: 15px;" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Calculator Section -->
+    <section class="calculator" id="calculator">
+        <div class="container">
+            <h2 class="section-title">Калькулятор экономии</h2>
+            <p style="text-align: center; margin-bottom: 50px; max-width: 800px; margin-left: auto; margin-right: auto;">Узнайте, сколько вы сможете сэкономить с помощью автоматизации вашего ресторана</p>
+            
+            <div class="calc-container">
+                <div class="calc-form">
+                    <div class="form-group">
+                        <label for="averageOrders">Среднее количество заказов в день</label>
+                        <input type="number" id="averageOrders" min="10" max="1000" value="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="averageBill">Средний чек (₽)</label>
+                        <input type="number" id="averageBill" min="500" max="10000" value="1500">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="staffCount">Количество сотрудников</label>
+                        <input type="number" id="staffCount" min="1" max="100" value="10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="currentCosts">Текущие операционные расходы в месяц (₽)</label>
+                        <input type="number" id="currentCosts" min="10000" max="1000000" value="150000">
+                    </div>
+                    
+                    <div class="calc-result">
+                        <h3>Ваша потенциальная экономия в месяц:</h3>
+                        <div class="savings-amount" id="savingsAmount">0 ₽</div>
+                        <p style="margin-top: 10px;">На основе анализа похожих заведений</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Наши тарифы</h2>
+            <p style="text-align: center; margin-bottom: 50px; max-width: 800px; margin-left: auto; margin-right: auto;">Выберите подходящий тариф для вашего ресторана</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Старт</h3>
+                        <div class="pricing-price">15.000 ֏</div>
+                        <div class="pricing-period">ежемесячно</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> До 50 продуктов и тех.карт</li>
+                        <li><i class="fas fa-check"></i> Базовая версия</li>
+                        <li><i class="fas fa-check"></i> POS система</li>
+                        <li><i class="fas fa-check"></i> Мобильный официант</li>
+                        <li><i class="fas fa-check"></i> Техподдержка</li>
+                    </ul>
+                    <div class="pricing-cta">
+                        <a href="#contact" class="btn">Выбрать тариф</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Мини</h3>
+                        <div class="pricing-price">25.000 ֏</div>
+                        <div class="pricing-period">ежемесячно</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> До 100 товаров и тех.карт</li>
+                        <li><i class="fas fa-check"></i> Идеально для Фаст фуда</li>
+                        <li><i class="fas fa-check"></i> Все возможности Старт тарифа</li>
+                        <li><i class="fas fa-check"></i> Интеграция с доставкой</li>
+                        <li><i class="fas fa-check"></i> Приоритетная поддержка</li>
+                    </ul>
+                    <div class="pricing-cta">
+                        <a href="#contact" class="btn">Выбрать тариф</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Бизнес</h3>
+                        <div class="pricing-price">35.000 ֏</div>
+                        <div class="pricing-period">ежемесячно</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> До 300 товаров и тех.карт</li>
+                        <li><i class="fas fa-check"></i> Модификаторы и удаления</li>
+                        <li><i class="fas fa-check"></i> Чеки с кассы</li>
+                        <li><i class="fas fa-check"></i> Сообщения об остатках</li>
+                        <li><i class="fas fa-check"></i> Расширенная аналитика</li>
+                    </ul>
+                    <div class="pricing-cta">
+                        <a href="#contact" class="btn">Выбрать тариф</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-name">Про</h3>
+                        <div class="pricing-price">45.000 ֏</div>
+                        <div class="pricing-period">ежемесячно</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> До 1500 продуктов и тех.карт</li>
+                        <li><i class="fas fa-check"></i> Полный функционал</li>
+                        <li><i class="fas fa-check"></i> Несколько филиалов</li>
+                        <li><i class="fas fa-check"></i> Персональный менеджер</li>
+                        <li><i class="fas fa-check"></i> Круглосуточная поддержка</li>
+                    </ul>
+                    <div class="pricing-cta">
+                        <a href="#contact" class="btn">Выбрать тариф</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Отзывы клиентов</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial active">
+                    <p class="testimonial-text">"CIA SOFT полностью изменила способ управления нашим рестораном. Теперь мы экономим 15 часов в неделю на рутинных операциях!"</p>
+                    <p class="testimonial-author">— Армен, владелец ресторана "Ташир"</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"Интеграция с сервисами доставки сэкономила нам множество времени и исключила ошибки при передаче заказов."</p>
+                    <p class="testimonial-author">— Анаит, управляющая кафе "У Ашота"</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"Даже при отключении интернета мы можем продолжать работать без потери данных. Это бесценно для нашего заведения!"</p>
+                    <p class="testimonial-author">— Гагик, владелец бара "Карас"</p>
+                </div>
+            </div>
+            
+            <div class="testimonial-controls">
+                <div class="testimonial-control active" data-index="0"></div>
+                <div class="testimonial-control" data-index="1"></div>
+                <div class="testimonial-control" data-index="2"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Integrations Section -->
+    <section class="integrations" id="integrations">
+        <div class="container">
+            <h2 class="section-title">Наши интеграции</h2>
+            <p style="text-align: center; margin-bottom: 50px; max-width: 800px; margin-left: auto; margin-right: auto;">CIA SOFT интегрируется с популярными сервисами, чтобы предоставить вам единую экосистему для управления рестораном</p>
+            
+            <div class="integrations-grid">
+                <div class="integration-item">
+                    <img src="https://placehold.co/150x60/e0f0e5/1a4b5f?text=Glovo" alt="Glovo" loading="lazy">
+                </div>
+                <div class="integration-item">
+                    <img src="https://placehold.co/150x60/e0f0e5/1a4b5f?text=Yandex.Food" alt="Yandex Food" loading="lazy">
+                </div>
+                <div class="integration-item">
+                    <img src="https://placehold.co/150x60/e0f0e5/1a4b5f?text=DeliveryClub" alt="Delivery Club" loading="lazy">
+                </div>
+                <div class="integration-item">
+                    <img src="https://placehold.co/150x60/e0f0e5/1a4b5f?text=Instagram" alt="Instagram" loading="lazy">
+                </div>
+                <div class="integration-item">
+                    <img src="https://placehold.co/150x60/e0f0e5/1a4b5f?text=Facebook" alt="Facebook" loading="lazy">
+                </div>
+                <div class="integration-item">
+                    <img src="https://placehold.co/150x60/e0f0e5/1a4b5f?text=1C" alt="1C" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Часто задаваемые вопросы</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Сколько времени занимает внедрение системы?</span>
+                        <span><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Мы осуществляем полное внедрение системы за 1 день. Наши специалисты приедут к вам, установят всё необходимое оборудование, проведут обучение персонала и будут на связи 24/7 в первую неделю работы.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Какое оборудование необходимо для работы?</span>
+                        <span><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Система работает на любом современном планшете, смартфоне или компьютере. Мы поможем подобрать оптимальное оборудование под ваш бюджет и потребности.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Что происходит при отключении интернета?</span>
+                        <span><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Система продолжает работать в автономном режиме. Все данные сохраняются локально и синхронизируются с облаком, как только подключение к интернету восстанавливается.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Как происходит интеграция с доставкой?</span>
+                        <span><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Мы настраиваем прямое подключение к API сервисов доставки. Заказы автоматически поступают в вашу систему, и вы сразу видите их на экране без необходимости использования дополнительных устройств.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Предоставляется ли пробный период?</span>
+                        <span><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Да, мы предоставляем 14-дневный пробный период для полноценного тестирования системы в условиях вашего заведения.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Готовы автоматизировать ваш ресторан?</h2>
+            <p>Свяжитесь с нами для бесплатной демонстрации системы и получите индивидуальное предложение</p>
+            <a href="#" class="btn" id="ctaButton">Заказать демонстрацию</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О компании</h3>
+                    <p>CIA SOFT — современная система автоматизации для ресторанов, кафе и баров по всей Армении.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="#features">Возможности</a></li>
+                        <li><a href="#demo">Демо</a></li>
+                        <li><a href="#calculator">Калькулятор</a></li>
+                        <li><a href="#pricing">Тарифы</a></li>
+                        <li><a href="#testimonials">Отзывы</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Ереван, ул. Аршакуняц 34</li>
+                        <li><i class="fas fa-phone"></i> +374 (98)61 50 05 </li>
+                        <li><i class="fas fa-envelope"></i> info@cia-soft.am</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 CIA SOFT. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Particles.js initialization
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 60, density: { enable: true, value_area: 800 } },
+                        color: { value: "#2a7d5f" },
+                        shape: { type: "circle" },
+                        opacity: { value: 0.3, random: true },
+                        size: { value: 3, random: true },
+                        line_linked: {
+                            enable: true,
+                            distance: 150,
+                            color: "#1a4b5f",
+                            opacity: 0.2,
+                            width: 1
+                        },
+                        move: {
+                            enable: true,
+                            speed: 2,
+                            direction: "none",
+                            random: true,
+                            straight: false,
+                            out_mode: "out",
+                            bounce: false
+                        }
+                    },
+                    interactivity: {
+                        detect_on: "canvas",
+                        events: {
+                            onhover: { enable: true, mode: "grab" },
+                            onclick: { enable: true, mode: "push" },
+                            resize: true
+                        },
+                        modes: {
+                            grab: { distance: 140, line_linked: { opacity: 0.3 } },
+                            push: { particles_nb: 4 }
+                        }
+                    },
+                    retina_detect: true
+                });
+            }
+            
+            // Typing effect
+            let texts = [
+                "POS система для ресторанов.",
+                "Интеграция с доставкой.",
+                "Работа без интернета.",
+                "Полная автоматизация."
+            ];
+            let textIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 100;
+            
+            function type() {
+                const currentText = texts[textIndex];
+                const typingElement = document.getElementById('typing');
+                
+                if (isDeleting) {
+                    typingElement.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                    typingSpeed = 50;
+                } else {
+                    typingElement.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                    typingSpeed = 100;
+                }
+                
+                if (!isDeleting && charIndex === currentText.length) {
+                    isDeleting = true;
+                    typingSpeed = 1000;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % texts.length;
+                    typingSpeed = 500;
+                }
+                
+                setTimeout(type, typingSpeed);
+            }
+            
+            type();
+            
+            // Header scroll effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            mobileMenuClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close mobile menu when clicking on links
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // Demo tabs
+            const demoTabs = document.querySelectorAll('.demo-tab');
+            const demoContentTabs = document.querySelectorAll('.demo-content-tab');
+            
+            demoTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and content
+                    demoTabs.forEach(t => t.classList.remove('active'));
+                    demoContentTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to current tab and content
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Calculator functionality
+            const calcInputs = document.querySelectorAll('.calc-form input');
+            const savingsAmount = document.getElementById('savingsAmount');
+            
+            function calculateSavings() {
+                const orders = parseInt(document.getElementById('averageOrders').value) || 0;
+                const bill = parseInt(document.getElementById('averageBill').value) || 0;
+                const staff = parseInt(document.getElementById('staffCount').value) || 0;
+                const costs = parseInt(document.getElementById('currentCosts').value) || 0;
+                
+                // Simplified calculation for demonstration
+                const monthlyRevenue = orders * bill * 30;
+                const estimatedSavings = monthlyRevenue * 0.05 + staff * 5000 + costs * 0.03;
+                
+                savingsAmount.textContent = Math.round(estimatedSavings).toLocaleString('ru-RU') + ' ₽';
+            }
+            
+            calcInputs.forEach(input => {
+                input.addEventListener('input', calculateSavings);
+            });
+            
+            // Initialize calculation
+            calculateSavings();
+            
+            // Testimonials slider
+            const testimonials = document.querySelectorAll('.testimonial');
+            const testimonialControls = document.querySelectorAll('.testimonial-control');
+            let currentTestimonial = 0;
+            let testimonialInterval;
+            
+            function showTestimonial(index) {
+                testimonials.forEach(testimonial => {
+                    testimonial.classList.remove('active');
+                });
+                
+                testimonialControls.forEach(control => {
+                    control.classList.remove('active');
+                });
+                
+                testimonials[index].classList.add('active');
+                testimonialControls[index].classList.add('active');
+                currentTestimonial = index;
+            }
+            
+            function nextTestimonial() {
+                let nextIndex = (currentTestimonial + 1) % testimonials.length;
+                showTestimonial(nextIndex);
+            }
+            
+            function startTestimonialTimer() {
+                testimonialInterval = setInterval(nextTestimonial, 5000);
+            }
+            
+            function resetTestimonialTimer() {
+                clearInterval(testimonialInterval);
+                startTestimonialTimer();
+            }
+            
+            testimonialControls.forEach(control => {
+                control.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    showTestimonial(index);
+                    resetTestimonialTimer();
+                });
+            });
+            
+            startTestimonialTimer();
+            
+            // Accordion functionality
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const item = header.parentElement;
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all accordion items
+                    document.querySelectorAll('.accordion-item').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    // Open clicked item if it was closed
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+            
+            // Back to top button
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 500) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerHeight = document.getElementById('header').offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Logo click to scroll to top
+            document.getElementById('logo').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // CTA button click handler
+            document.getElementById('ctaButton').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Спасибо за ваш интерес! Наша команда свяжется с вами в ближайшее время для организации демонстрации.');
+            });
+            
+            // Animation on scroll
+            const fadeElems = document.querySelectorAll('.feature-card, .demo-content, .demo-visual, .integration-item, .pricing-card');
+            
+            const fadeOptions = {
+                threshold: 0.2
+            };
+            
+            const fadeOnScroll = new IntersectionObserver(function(entries, fadeOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('fade-in');
+                        fadeOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, fadeOptions);
+            
+            fadeElems.forEach(elem => {
+                fadeOnScroll.observe(elem);
+            });
+            
+            // Add visible class to feature cards when in viewport
+            const featureCards = document.querySelectorAll('.feature-card');
+            const featureObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        featureObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            featureCards.forEach(card => {
+                featureObserver.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
