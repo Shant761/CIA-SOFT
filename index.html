@@ -271,7 +271,7 @@
             height: 0;
             background: linear-gradient(to bottom, var(--accent-green), var(--accent-blue));
             transition: var(--transition);
-        }
+            }
         
         .feature-card:hover:before {
             height: 100%;
@@ -442,6 +442,81 @@
             color: var(--accent-green);
         }
         
+        /* Additional Services Section */
+        .additional-services {
+            padding: 100px 0;
+            background: var(--light-green);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light-bronze);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--accent-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+        }
+        
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin: 15px 0;
+        }
+        
+        .service-description {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+        
+        .service-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        .service-features li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-features li i {
+            color: var(--accent-green);
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
         /* Testimonials */
         .testimonials {
             padding: 100px 0;
@@ -499,7 +574,7 @@
             background: var(--light-bronze);
             width: 12px;
             height: 12px;
-            borderRadius: 50%;
+            border-radius: 50%;
             margin: 0 8px;
             cursor: pointer;
             transition: var(--transition);
@@ -1027,6 +1102,7 @@
                     <li><a href="#demo">Демо</a></li>
                     <li><a href="#calculator">Калькулятор</a></li>
                     <li><a href="#pricing">Тарифы</a></li>
+                    <li><a href="#additional-services">Доп. услуги</a></li>
                     <li><a href="#testimonials">Отзывы</a></li>
                     <li><a href="#integrations">Интеграции</a></li>
                     <li><a href="#faq">FAQ</a></li>
@@ -1047,9 +1123,10 @@
         <nav aria-label="Mobile navigation">
             <ul class="nav-links">
                 <li><a href="#features">Возможности</a></li>
-                <li><a href="#demo">Демo</a></li>
+                <li><a href="#demo">Демо</a></li>
                 <li><a href="#calculator">Калькулятор</a></li>
                 <li><a href="#pricing">Тарифы</a></li>
+                <li><a href="#additional-services">Доп. услуги</a></li>
                 <li><a href="#testimonials">Отзывы</a></li>
                 <li><a href="#integrations">Интеграции</a></li>
                 <li><a href="#faq">FAQ</a></li>
@@ -1123,7 +1200,7 @@
                 <h2 class="section-title">Как это работает</h2>
                 <p>Наша система объединяет все аспекты управления рестораном в одном интерфейсе. От приёма заказа до фискального чека, от контроля склада до автоматической отправки отчетов.</p>
                 <p>Интуитивно понятный интерфейс позволяет вашим сотрудникам быстро освоить систему, а владельцам получать детальную аналитику в реальном времени.</p>
-                <a href="#contact" class="btn">Запросить демонстрацию</a>
+                <a href="#contact" class="btn">Запросить демонstration</a>
             </div>
             <div class="demo-visual">
                 <img src="https://placehold.co/600x400/e0f0e5/1a4b5f?text=CIA+SOFT+Interface" alt="CIA SOFT Interface" class="demo-image" loading="lazy">
@@ -1277,6 +1354,76 @@
         </div>
     </section>
     
+    <!-- Additional Services Section -->
+    <section class="additional-services" id="additional-services">
+        <div class="container">
+            <h2 class="section-title">Дополнительные услуги</h2>
+            <p style="text-align: center; margin-bottom: 50px; max-width: 800px; margin-left: auto; margin-right: auto;">Расширьте возможности вашей системы с нашими дополнительными услугами</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-cash-register"></i></div>
+                    <h3>Дополнительная касса</h3>
+                    <div class="service-price">20.000 ֏ за каждую кассу</div>
+                    <div class="service-description">
+                        Добавьте дополнительные точки продаж для вашего заведения
+                    </div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Полная интеграция с основной системой</li>
+                        <li><i class="fas fa-check"></i> Автоматическая синхронизация данных</li>
+                        <li><i class="fas fa-check"></i> Поддержка всех функций основной кассы</li>
+                    </ul>
+                    <a href="#contact" class="btn">Заказать услугу</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Мобильный официант</h3>
+                    <div class="service-price">8.500 ֏ за устройство</div>
+                    <div class="service-description">
+                        Предоставьте вашим официантам современные инструменты для работы
+                    </div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Прием заказов с планшетов</li>
+                        <li><i class="fas fa-check"></i> Мгновенная отправка на кухню</li>
+                        <li><i class="fas fa-check"></i> Управление столиками и предзаказами</li>
+                    </ul>
+                    <a href="#contact" class="btn">Заказать услугу</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3>Системный учет и анализ ABS</h3>
+                    <div class="service-price">50.000 ֏ за 100 товаров/техкарт</div>
+                    <div class="service-description">
+                        Профессиональный анализ и отчетность для вашего бизнеса
+                    </div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Составление детальных отчетов</li>
+                        <li><i class="fas fa-check"></i> Анализ техкарт и поставок</li>
+                        <li><i class="fas fa-check"></i> Каждые следующие 100 товаров +10.000 ֏/мес</li>
+                    </ul>
+                    <a href="#contact" class="btn">Заказать услугу</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-key"></i></div>
+                    <h3>Полная интеграция под ключ</h3>
+                    <div class="service-price">от 500.000 ֏</div>
+                    <div class="service-description">
+                        Комплексное внедрение системы для заведений от 100 кв.м
+                    </div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Проектирование и планирование</li>
+                        <li><i class="fas fa-check"></i> Установка и настройка оборудования</li>
+                        <li><i class="fas fa-check"></i> Обучение персонала и техподдержка</li>
+                    </ul>
+                    <a href="#contact" class="btn">Заказать услугу</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
         <div class="container">
@@ -1291,7 +1438,7 @@
                     <p class="testimonial-author">— Анаит, управляющая кафе "У Ашота"</p>
                 </div>
                 <div class="testimonial">
-                    <p class="testimonial-text">"Даже при отключении интернета мы можем продолжать работать без потери данных. Это бесценно для нашего заведения!"</p>
+                    <p class="testimonial-text">"Да даже при отключении интернета мы можем продолжать работать без потери данных. Это бесценно для нашего заведения!"</p>
                     <p class="testimonial-author">— Гагик, владелец бара "Карас"</p>
                 </div>
             </div>
@@ -1370,7 +1517,7 @@
                 
                 <div class="accordion-item">
                     <div class="accordion-header">
-                        <span>Как происходит интеграция с доставкой?</span>
+                        <span>Как происходит интеграция с доставка?</span>
                         <span><i class="fas fa-plus"></i></span>
                     </div>
                     <div class="accordion-content">
@@ -1422,6 +1569,7 @@
                         <li><a href="#demo">Демо</a></li>
                         <li><a href="#calculator">Калькулятор</a></li>
                         <li><a href="#pricing">Тарифы</a></li>
+                        <li><a href="#additional-services">Доп. услуги</a></li>
                         <li><a href="#testimonials">Отзывы</a></li>
                         <li><a href="#faq">FAQ</a></li>
                     </ul>
@@ -1730,7 +1878,7 @@
             });
             
             // Animation on scroll
-            const fadeElems = document.querySelectorAll('.feature-card, .demo-content, .demo-visual, .integration-item, .pricing-card');
+            const fadeElems = document.querySelectorAll('.feature-card, .demo-content, .demo-visual, .integration-item, .pricing-card, .service-card');
             
             const fadeOptions = {
                 threshold: 0.2
