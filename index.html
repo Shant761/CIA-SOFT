@@ -128,6 +128,42 @@
             width: 100%;
         }
         
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            margin-left: 30px;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            width: 40px;
+            height: 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .lang-btn.active {
+            box-shadow: 0 0 0 2px var(--accent-green);
+        }
+        
+        .lang-am {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2"><rect width="3" height="2" fill="#F2A800"/><rect width="3" height="1.3" fill="#0033A0"/><rect y="1.3" width="3" height="0.7" fill="#D90012"/></svg>');
+        }
+        
+        .lang-en {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30"><clipPath id="a"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="b"><path d="M30 15h30v15zv15H0zH0v15zv-15h30z"/></clipPath><g clip-path="url(#a)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#b)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>');
+        }
+        
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -271,7 +307,7 @@
             height: 0;
             background: linear-gradient(to bottom, var(--accent-green), var(--accent-blue));
             transition: var(--transition);
-            }
+        }
         
         .feature-card:hover:before {
             height: 100%;
@@ -373,73 +409,6 @@
         
         .demo-content-tab.active {
             display: block;
-        }
-        
-        /* Calculator Section */
-        .calculator {
-            padding: 100px 0;
-            background: var(--light-ocean);
-        }
-        
-        .calc-container {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .calc-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--accent-blue);
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--light-bronze);
-            border-radius: 8px;
-            transition: var(--transition);
-            font-family: inherit;
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent-green);
-            box-shadow: 0 0 0 3px rgba(42, 125, 95, 0.2);
-        }
-        
-        .calc-result {
-            grid-column: span 2;
-            background: var(--light-green);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        
-        .calc-result h3 {
-            color: var(--accent-blue);
-            margin-bottom: 10px;
-        }
-        
-        .savings-amount {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent-green);
         }
         
         /* Additional Services Section */
@@ -952,6 +921,10 @@
                 display: none;
             }
             
+            .language-switcher {
+                display: none;
+            }
+            
             .mobile-menu-btn {
                 display: block;
             }
@@ -998,20 +971,19 @@
                 padding: 5px;
             }
             
-            .calc-form {
-                grid-template-columns: 1fr;
-            }
-            
-            .calc-result {
-                grid-column: span 1;
-            }
-            
             .pricing-card.featured {
                 transform: scale(1);
             }
             
             .pricing-card.featured:hover {
                 transform: translateY(-10px);
+            }
+            
+            .mobile-language-switcher {
+                display: flex;
+                justify-content: center;
+                margin-top: 30px;
+                gap: 15px;
             }
         }
         
@@ -1100,7 +1072,6 @@
                 <ul class="nav-links">
                     <li><a href="#features">Возможности</a></li>
                     <li><a href="#demo">Демо</a></li>
-                    <li><a href="#calculator">Калькулятор</a></li>
                     <li><a href="#pricing">Тарифы</a></li>
                     <li><a href="#additional-services">Доп. услуги</a></li>
                     <li><a href="#testimonials">Отзывы</a></li>
@@ -1108,6 +1079,10 @@
                     <li><a href="#faq">FAQ</a></li>
                     <li><a href="#contact">Контакты</a></li>
                 </ul>
+                <div class="language-switcher">
+                    <button class="lang-btn lang-am active" aria-label="Switch to Armenian"></button>
+                    <button class="lang-btn lang-en" aria-label="Switch to English"></button>
+                </div>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
                 <i class="fas fa-bars" aria-hidden="true"></i>
@@ -1124,7 +1099,6 @@
             <ul class="nav-links">
                 <li><a href="#features">Возможности</a></li>
                 <li><a href="#demo">Демо</a></li>
-                <li><a href="#calculator">Калькулятор</a></li>
                 <li><a href="#pricing">Тарифы</a></li>
                 <li><a href="#additional-services">Доп. услуги</a></li>
                 <li><a href="#testimonials">Отзывы</a></li>
@@ -1132,6 +1106,10 @@
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#contact">Контакты</a></li>
             </ul>
+            <div class="mobile-language-switcher">
+                <button class="lang-btn lang-am active" aria-label="Switch to Armenian"></button>
+                <button class="lang-btn lang-en" aria-label="Switch to English"></button>
+            </div>
         </nav>
     </div>
     
@@ -1163,7 +1141,7 @@
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
                     <h3>Бухгалтерия и склад</h3>
-                    <p>Полный учёт и контроль всех финансовых операций и складских остатков в реальном времени.</p>
+                    <p>Полный учёт и контроль всех финансовных операций и складских остатков в реальном времени.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -1200,7 +1178,7 @@
                 <h2 class="section-title">Как это работает</h2>
                 <p>Наша система объединяет все аспекты управления рестораном в одном интерфейсе. От приёма заказа до фискального чека, от контроля склада до автоматической отправки отчетов.</p>
                 <p>Интуитивно понятный интерфейс позволяет вашим сотрудникам быстро освоить систему, а владельцам получать детальную аналитику в реальном времени.</p>
-                <a href="#contact" class="btn">Запросить демонstration</a>
+                <a href="#contact" class="btn">Запросить демонстрацию</a>
             </div>
             <div class="demo-visual">
                 <img src="https://placehold.co/600x400/e0f0e5/1a4b5f?text=CIA+SOFT+Interface" alt="CIA SOFT Interface" class="demo-image" loading="lazy">
@@ -1229,44 +1207,6 @@
                 <div class="demo-content-tab" id="tab3">
                     <p>Детальная аналитика продаж, популярности блюд, эффективности работы сотрудников и многое другое. Все данные в реальном времени с возможностью формирования отчетов.</p>
                     <img src="https://placehold.co/600x300/e0f0e5/1a4b5f?text=Analytics+Dashboard" alt="Analytics Dashboard" style="width: 100%; border-radius: 8px; margin-top: 15px;" loading="lazy">
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Calculator Section -->
-    <section class="calculator" id="calculator">
-        <div class="container">
-            <h2 class="section-title">Калькулятор экономии</h2>
-            <p style="text-align: center; margin-bottom: 50px; max-width: 800px; margin-left: auto; margin-right: auto;">Узнайте, сколько вы сможете сэкономить с помощью автоматизации вашего ресторана</p>
-            
-            <div class="calc-container">
-                <div class="calc-form">
-                    <div class="form-group">
-                        <label for="averageOrders">Среднее количество заказов в день</label>
-                        <input type="number" id="averageOrders" min="10" max="1000" value="100">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="averageBill">Средний чек (₽)</label>
-                        <input type="number" id="averageBill" min="500" max="10000" value="1500">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="staffCount">Количество сотрудников</label>
-                        <input type="number" id="staffCount" min="1" max="100" value="10">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="currentCosts">Текущие операционные расходы в месяц (₽)</label>
-                        <input type="number" id="currentCosts" min="10000" max="1000000" value="150000">
-                    </div>
-                    
-                    <div class="calc-result">
-                        <h3>Ваша потенциальная экономия в месяц:</h3>
-                        <div class="savings-amount" id="savingsAmount">0 ₽</div>
-                        <p style="margin-top: 10px;">На основе анализа похожих заведений</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1438,7 +1378,7 @@
                     <p class="testimonial-author">— Анаит, управляющая кафе "У Ашота"</p>
                 </div>
                 <div class="testimonial">
-                    <p class="testimonial-text">"Да даже при отключении интернета мы можем продолжать работать без потери данных. Это бесценно для нашего заведения!"</p>
+                    <p class="testimonial-text">"Даже при отключении интернета мы можем продолжать работать без потери данных. Это бесценно для нашего заведения!"</p>
                     <p class="testimonial-author">— Гагик, владелец бара "Карас"</p>
                 </div>
             </div>
@@ -1517,7 +1457,7 @@
                 
                 <div class="accordion-item">
                     <div class="accordion-header">
-                        <span>Как происходит интеграция с доставка?</span>
+                        <span>Как происходит интеграция с доставкой?</span>
                         <span><i class="fas fa-plus"></i></span>
                     </div>
                     <div class="accordion-content">
@@ -1567,7 +1507,6 @@
                     <ul>
                         <li><a href="#features">Возможности</a></li>
                         <li><a href="#demo">Демо</a></li>
-                        <li><a href="#calculator">Калькулятор</a></li>
                         <li><a href="#pricing">Тарифы</a></li>
                         <li><a href="#additional-services">Доп. услуги</a></li>
                         <li><a href="#testimonials">Отзывы</a></li>
@@ -1736,30 +1675,6 @@
                 });
             });
             
-            // Calculator functionality
-            const calcInputs = document.querySelectorAll('.calc-form input');
-            const savingsAmount = document.getElementById('savingsAmount');
-            
-            function calculateSavings() {
-                const orders = parseInt(document.getElementById('averageOrders').value) || 0;
-                const bill = parseInt(document.getElementById('averageBill').value) || 0;
-                const staff = parseInt(document.getElementById('staffCount').value) || 0;
-                const costs = parseInt(document.getElementById('currentCosts').value) || 0;
-                
-                // Simplified calculation for demonstration
-                const monthlyRevenue = orders * bill * 30;
-                const estimatedSavings = monthlyRevenue * 0.05 + staff * 5000 + costs * 0.03;
-                
-                savingsAmount.textContent = Math.round(estimatedSavings).toLocaleString('ru-RU') + ' ₽';
-            }
-            
-            calcInputs.forEach(input => {
-                input.addEventListener('input', calculateSavings);
-            });
-            
-            // Initialize calculation
-            calculateSavings();
-            
             // Testimonials slider
             const testimonials = document.querySelectorAll('.testimonial');
             const testimonialControls = document.querySelectorAll('.testimonial-control');
@@ -1875,6 +1790,27 @@
             document.getElementById('ctaButton').addEventListener('click', function(e) {
                 e.preventDefault();
                 alert('Спасибо за ваш интерес! Наша команда свяжется с вами в ближайшее время для организации демонстрации.');
+            });
+            
+            // Language switcher functionality
+            const langButtons = document.querySelectorAll('.lang-btn');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Here you would typically implement actual language switching
+                    // For now, we'll just show an alert
+                    if (this.classList.contains('lang-am')) {
+                        alert('Переключение на армянский язык');
+                    } else if (this.classList.contains('lang-en')) {
+                        alert('Switching to English language');
+                    }
+                });
             });
             
             // Animation on scroll
